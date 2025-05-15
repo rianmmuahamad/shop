@@ -4,117 +4,1064 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <title>Nova Care Tangerang</title>
 </head>
+<style>
+    :root {
+        --primary: #1E90FF;
+        --primary-light: #87CEFA;
+        --primary-dark: #0066CC;
+        --secondary: #4A90E2;
+        --text: #333333;
+        --text-light: #666666;
+        --background: #F8FAFC;
+        --white: #FFFFFF;
+        --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+        --nav-bg: #FFFFFF;
+        --card-bg: #FFFFFF;
+        --footer-bg: #0066CC;
+    }
 
+    [data-theme="dark"] {
+        --primary: #1E90FF;
+        --primary-light: #87CEFA;
+        --primary-dark: #0066CC;
+        --text: #E0E0E0;
+        --text-light: #B0B0B0;
+        --background: #121212;
+        --white: #1E1E1E;
+        --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        --nav-bg: #1E1E1E;
+        --card-bg: #2D2D2D;
+        --footer-bg: #121212;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        color: var(--text);
+        background-color: var(--background);
+        line-height: 1.6;
+        transition: var(--transition);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    header {
+        background-color: var(--nav-bg);
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        transition: var(--transition);
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo img {
+        height: 40px;
+    }
+
+    .logo-text {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--primary);
+    }
+
+    .logo-text span {
+        color: var(--primary-light);
+    }
+
+    .navbar-menu {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .navbar-menu a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        transition: var(--transition);
+        position: relative;
+        padding: 8px 15px;
+        border-radius: 20px;
+    }
+
+    .navbar-menu a:hover {
+        color: var(--primary);
+        background-color: rgba(30, 144, 255, 0.1);
+    }
+
+    .navbar-menu a.active {
+        color: white;
+        background-color: var(--primary);
+    }
+
+    .navbar-menu a.active:hover {
+        background-color: var(--primary-dark);
+    }
+
+    .cta-button {
+        background-color: var(--primary);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        border: 2px solid var(--primary);
+    }
+
+    .cta-button:hover {
+        background-color: transparent;
+        color: var(--primary);
+    }
+
+    .theme-switcher {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-left: 15px;
+    }
+
+    .theme-toggle {
+        background: var(--nav-bg);
+        border: 1px solid var(--primary);
+        border-radius: 20px;
+        padding: 8px 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: var(--transition);
+    }
+
+    .theme-toggle i {
+        font-size: 16px;
+        color: var(--primary);
+    }
+
+    .theme-toggle span {
+        font-size: 14px;
+        color: var(--text);
+        font-weight: 500;
+    }
+
+    .theme-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: var(--nav-bg);
+        border: 1px solid var(--primary);
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        display: none;
+        flex-direction: column;
+        width: 120px;
+        z-index: 1000;
+        margin-top: 5px;
+    }
+
+    .theme-dropdown.active {
+        display: flex;
+    }
+
+    .theme-option {
+        padding: 10px 15px;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 14px;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .theme-option:hover {
+        background-color: rgba(30, 144, 255, 0.1);
+        color: var(--primary);
+    }
+
+    .theme-option i {
+        font-size: 14px;
+    }
+
+    .navbar-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .navbar-toggle span {
+        width: 25px;
+        height: 3px;
+        background-color: var(--primary);
+        margin: 3px 0;
+        transition: var(--transition);
+    }
+
+    .navbar-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .navbar-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .navbar-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    .hero {
+        background: linear-gradient(rgba(30, 144, 255, 0.9), rgba(135, 206, 250, 0.8)), 
+                    url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto 30px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .secondary-button {
+        background-color: transparent;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        border: 2px solid white;
+    }
+
+    .secondary-button:hover {
+        background-color: white;
+        color: var(--primary);
+    }
+
+    .about {
+        padding: 80px 0;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 15px;
+    }
+
+    .section-title p {
+        color: var(--text-light);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .about-content {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+    }
+
+    .about-image {
+        flex: 1;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+    }
+
+    .about-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: var(--transition);
+    }
+
+    .about-image:hover img {
+        transform: scale(1.05);
+    }
+
+    .about-text {
+        flex: 1;
+    }
+
+    .about-text h3 {
+        font-size: 1.8rem;
+        color: var(--primary-dark);
+        margin-bottom: 20px;
+    }
+
+    .about-text p {
+        margin-bottom: 15px;
+    }
+
+    .highlight {
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    .services {
+        padding: 80px 0;
+        background-color: var(--background);
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    .service-card {
+        background-color: var(--card-bg);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-image {
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .service-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+    }
+
+    .service-card:hover .service-image img {
+        transform: scale(1.1);
+    }
+
+    .service-content {
+        padding: 25px;
+    }
+
+    .service-content h3 {
+        font-size: 1.4rem;
+        color: var(--primary);
+        margin-bottom: 15px;
+    }
+
+    .service-content p {
+        color: var(--text-light);
+        margin-bottom: 20px;
+    }
+
+    .read-more {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: var(--transition);
+    }
+
+    .read-more:hover {
+        color: var(--primary-dark);
+    }
+
+    .read-more i {
+        transition: var(--transition);
+    }
+
+    .read-more:hover i {
+        transform: translateX(5px);
+    }
+
+    .contact {
+        padding: 80px 0;
+    }
+
+    .contact-container {
+        display: flex;
+        gap: 50px;
+    }
+
+    .contact-info {
+        flex: 1;
+        background-color: var(--primary);
+        color: white;
+        padding: 40px;
+        border-radius: 10px;
+    }
+
+    .contact-info h3 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .contact-details {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .contact-icon {
+        font-size: 1.2rem;
+        color: var(--primary-light);
+        margin-top: 3px;
+    }
+
+    .contact-text {
+        flex: 1;
+    }
+
+    .contact-text h4 {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+
+    .contact-text a {
+        color: white;
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .contact-text a:hover {
+        color: var(--primary-light);
+    }
+
+    .contact-form {
+        flex: 1;
+        background-color: var(--card-bg);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+    }
+
+    .contact-form h3 {
+        font-size: 1.8rem;
+        color: var(--primary);
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-family: 'Poppins', sans-serif;
+        transition: var(--transition);
+        background-color: var(--white);
+        color: var(--text);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
+    }
+
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: var(--transition);
+    }
+
+    .submit-btn:hover {
+        background-color: var(--primary-dark);
+    }
+
+    footer {
+        background-color: var(--footer-bg);
+        color: white;
+        padding: 50px 0 20px;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .footer-column h4 {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .footer-column h4::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--primary-light);
+    }
+
+    .footer-links {
+        list-style: none;
+    }
+
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        color: #ddd;
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+        color: white;
+        padding-left: 5px;
+    }
+
+    .footer-social {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .footer-social a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: white;
+        transition: var(--transition);
+    }
+
+    .footer-social a:hover {
+        background-color: var(--primary-light);
+        transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.9rem;
+        color: #ddd;
+    }
+
+    @media (max-width: 992px) {
+        .about-content {
+            flex-direction: column;
+        }
+        
+        .contact-container {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .navbar-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            height: 100vh;
+            background-color: var(--nav-bg);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            transition: var(--transition);
+            z-index: 1000;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-menu.active {
+            left: 0;
+        }
+        
+        .navbar-toggle {
+            display: flex;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+        
+        .hero-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .theme-switcher {
+            margin-left: 0;
+            margin-top: 20px;
+        }
+
+        .theme-dropdown {
+            width: 150px;
+            right: auto;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero h1 {
+            font-size: 2rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+        }
+    }
+</style>
 <body>
-    <div class="container">
-        <!-- navbar start -->
-        <nav class="navbar">
-            <div class="navbar-toggle" onclick="toggleMenu()">
-            </div>
-            <div class="navbar-center">
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="https://via.placeholder.com/40" alt="Nova Care Logo">
+                    <div class="logo-text">Nova<span>Care</span></div>
+                </div>
+                
                 <div class="navbar-menu" id="menu">
-                    <a href="index.html" class="a-navbar">Beranda</a>
-                    <a href="#ttg-kami" class="a-navbar">Tentang Kami</a>
-                    <a href="#layanan" class="a-navbar">Layanan</a>
-                    <a href="#kontak" class="a-navbar">Kontak</a>
+                    <a href="#home" class="active">Beranda</a>
+                    <a href="#about">Tentang Kami</a>
+                    <a href="#services">Layanan</a>
+                    <a href="#contact">Kontak</a>
+                    <a href="#" class="cta-button">Hubungi Kami</a>
+                    
+                    <div class="theme-switcher">
+                        <div class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-adjust"></i>
+                            <span>Theme</span>
+                        </div>
+                        <div class="theme-dropdown" id="themeDropdown">
+                            <a href="#" class="theme-option" data-theme="light"><i class="fas fa-sun"></i> Light</a>
+                            <a href="#" class="theme-option" data-theme="dark"><i class="fas fa-moon"></i> Dark</a>
+                            <a href="#" class="theme-option" data-theme="system"><i class="fas fa-desktop"></i> System</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navbar-toggle" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Perawatan Kesehatan Profesional di Rumah Anda</h1>
+            <p>Nova Care memberikan layanan home care berkualitas dengan tenaga medis profesional untuk kenyamanan dan pemulihan pasien di lingkungan rumah yang familiar.</p>
+            <div class="hero-buttons">
+                <a href="#services" class="cta-button">Lihat Layanan</a>
+                <a href="#contact" class="secondary-button">Konsultasi Gratis</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tentang Kami</h2>
+                <p>Nova Care hadir untuk memberikan solusi perawatan kesehatan profesional di rumah Anda</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Nova Care Team">
+                </div>
+                
+                <div class="about-text">
+                    <h3>Perawatan Berkualitas di Kenyamanan Rumah Anda</h3>
+                    <p><span class="highlight">Nova Care</span> adalah layanan home care modern yang menyediakan perawatan profesional dan penuh kasih di kenyamanan rumah Anda.</p>
+                    <p>Dengan tenaga kesehatan berpengalaman dan pendekatan holistik, kami hadir untuk mendampingi proses penyembuhan Anda atau orang terkasih secara optimal.</p>
+                    <p>Kami percaya bahwa perawatan terbaik tidak harus selalu di rumah sakit — <span class="highlight">kesehatan bisa dimulai dari rumah</span>.</p>
+                    <p>Tim kami terdiri dari perawat, terapis, dan tenaga medis profesional yang telah melalui pelatihan khusus untuk memberikan perawatan home care terbaik.</p>
                 </div>
             </div>
-        </nav>
-        <!-- navbar end -->
-
-        <!-- about  start-->
-        <div class="about-container" id="ttg-kami">
-            <center>
-                <h1>Tentang Kami</h1>
-            </center>
-            <p><span class="highlight">CareNova</span> adalah layanan home care modern yang menyediakan perawatan
-                profesional dan penuh kasih di kenyamanan rumah Anda.</p>
-            <p>Dengan tenaga kesehatan berpengalaman dan pendekatan holistik, kami hadir untuk mendampingi proses
-                penyembuhan
-                Anda atau orang terkasih secara optimal.</p>
-            <p>Kami percaya bahwa perawatan terbaik tidak harus selalu di rumah sakit — <span
-                    class="highlight">kesehatan bisa dimulai dari rumah</span>.</p>
         </div>
+    </section>
 
-        <!-- about end -->
-
-        <!-- layanan start -->
-
-        <center>
-            <section class="services-section" id="layanan">
-                <h2 class="h2-layanan">Layanan homecare / perawatan rumah</h2>
-                <div class="service-list">
-                    <div class="service-item">
-                        <h3 class="h3-layanan">Konsultasi kesehatan</h3>
-                        <p>Untuk memahami kebutuhan dan kondisi pasien, evaluasi medis ringan oleh tenaga kesehatan,
-                            rekomendasi jenis layanan home care yang sesuai. Layanan ini meliputi : pemeriksaan tekanan
-                            darah, gula darah, asam urat, dan kolesterol.
-                        </p>
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Layanan Kami</h2>
+                <p>Berbagai layanan profesional yang kami tawarkan untuk kebutuhan kesehatan Anda</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Konsultasi Kesehatan">
                     </div>
-                    <div class="service-list">
-                        <div class="service-item">
-                            <h3 class="h3-layanan">Layanan Infus Dirumah</h3>
-                            <p>Layanan Infus di Rumah untuk memberikan kenyamanan dan keamanan bagi pasien yang
-                                membutuhkan terapi cairan, vitamin, atau obat-obatan melalui infus tanpa harus ke rumah
-                                sakit, meliputi infus booster dan injeksi vitamin C</p>
-                        </div>
-            </section>
-            <section class="services-section">
-                <div class="service-list">
-                    <div class="service-item">
-                        <h3 class="h3-layanan">Pemasangan alat kesehatan</h3>
-                        <p>kami menyediakan layanan pemasangan dan pendampingan penggunaan alat kesehatan di rumah,
-                            untuk mendukung pemulihan pasien secara aman, nyaman, dan efisien tanpa harus ke fasilitas
-                            kesehatan. Layanan ini dilakukan oleh tenaga kesehatan profesional yang berpengalaman dan
-                            teregistrasi. Layanan ini meliputi pemasangan kateter urin, nasogastric tube (NGT) / selang
-                            makan.</p>
-                    </div>
-                    <div class="service-list">
-                        <div class="service-item">
-                            <h3 class="h3-layanan">Perawatan Luka</h3>
-                            <p>Layanan Perawatan Luka di Rumah dari CareNova membantu pasien mendapatkan penanganan luka
-                                yang tepat tanpa harus repot datang ke fasilitas kesehatan. Perawatan dilakukan langsung
-                                di rumah oleh perawat profesional bersertifikat dengan standar medis yang aman. Jenis
-                                luka yang kami tangani sebagai berikut : Luka pasca operasi, luka diabetes (ulkus
-                                diabetikum), luka tekan (pressure sore / dekubitus), luka infeksi, luka trauma (robek,
-                                sayat, jatuh), dan luka jahitan yang perlu kontrol rutin</p>
-                        </div>
-            </section>
-            <!-- layanan end -->
-
-            <!-- Kontak start -->
-            <section class="contact-section" id="kontak">
-                <h2>Kontak Kami</h2>
-                <div class="contact-details">
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt contact-icon"></i>
-                        <span>📍Kab. Tangerang, Kec. Sepatan, Cluster Grand City Sepatan, Blok B2/8</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone contact-icon"></i>
-                        <a href="tel:+6285792569539" class="contact-link">📞0857-9256-9539</a>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope contact-icon"></i>
-                        <a href="mailto:yullierachma@gmail.com" class="contact-link">✉️yullierachma@gmail.com</a>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-globe contact-icon"></i>
-                        <a href="https://www.carenova.id" class="contact-link" target="_blank">🌐www.carenova.id</a>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fab fa-whatsapp contact-icon"></i>
-                        <a href="https://wa.me/6285792569539?text=Assalamualaikum+kak+saya+ingin+menanyakan+layanan+homecare+yang+tersedia+saat+ini,+mohon+informasi+dan+prosedur+pelayanannya+terimakasih+🙏🏻"
-                            class="contact-link" target="_blank">📱Chat via WhatsApp</a>
+                    <div class="service-content">
+                        <h3>Konsultasi Kesehatan</h3>
+                        <p>Evaluasi medis ringan oleh tenaga kesehatan profesional untuk memahami kebutuhan dan kondisi pasien, termasuk pemeriksaan tekanan darah, gula darah, asam urat, dan kolesterol.</p>
+                        <a href="#" class="read-more">Selengkapnya <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
-            </section>
-            <!-- Kontak end -->
-    </div>
-    <script src="script.js"></script>
-</body>
+                
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Layanan Infus">
+                    </div>
+                    <div class="service-content">
+                        <h3>Layanan Infus di Rumah</h3>
+                        <p>Memberikan kenyamanan dan keamanan bagi pasien yang membutuhkan terapi cairan, vitamin, atau obat-obatan melalui infus tanpa harus ke rumah sakit.</p>
+                        <a href="#" class="read-more">Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Pemasangan Alat Kesehatan">
+                    </div>
+                    <div class="service-content">
+                        <h3>Pemasangan Alat Kesehatan</h3>
+                        <p>Layanan pemasangan dan pendampingan penggunaan alat kesehatan di rumah untuk mendukung pemulihan pasien secara aman dan nyaman.</p>
+                        <a href="#" class="read-more">Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Perawatan Luka">
+                    </div>
+                    <div class="service-content">
+                        <h3>Perawatan Luka</h3>
+                        <p>Penanganan luka yang tepat oleh perawat profesional bersertifikat dengan standar medis yang aman untuk berbagai jenis luka.</p>
+                        <a href="#" class="read-more">Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hubungi Kami</h2>
+                <p>Kami siap membantu kebutuhan kesehatan Anda. Hubungi kami untuk informasi lebih lanjut.</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Informasi Kontak</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt contact-icon"></i>
+                            <div class="contact-text">
+                                <h4>Alamat</h4>
+                                <p>Kab. Tangerang, Kec. Sepatan, Cluster Grand City Sepatan, Blok B2/8</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt contact-icon"></i>
+                            <div class="contact-text">
+                                <h4>Telepon</h4>
+                                <a href="tel:+6285792569539">0857-9256-9539</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-envelope contact-icon"></i>
+                            <div class="contact-text">
+                                <h4>Email</h4>
+                                <a href="mailto:yullierachma@gmail.com">yullierachma@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fab fa-whatsapp contact-icon"></i>
+                            <div class="contact-text">
+                                <h4>WhatsApp</h4>
+                                <a href="https://wa.me/6285792569539?text=Assalamualaikum+kak+saya+ingin+menanyakan+layanan+homecare+yang+tersedia+saat+ini,+mohon+informasi+dan+prosedur+pelayanannya+terimakasih+🙏🏻" target="_blank">Kirim Pesan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Kirim Pesan</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Nama Lengkap</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Nomor Telepon</label>
+                            <input type="tel" id="phone" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Layanan yang Diminati</label>
+                            <select id="service" class="form-control" required>
+                                <option value="">Pilih Layanan</option>
+                                <option value="consultation">Konsultasi Kesehatan</option>
+                                <option value="infusion">Layanan Infus</option>
+                                <option value="equipment">Pemasangan Alat Kesehatan</option>
+                                <option value="wound">Perawatan Luka</option>
+                                <option value="other">Lainnya</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Pesan</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="logo">
+                        <img src="https://via.placeholder.com/40" alt="Nova Care Logo">
+                        <div class="logo-text" style="color: white;">Nova<span style="color: var(--primary-light);">Care</span></div>
+                    </div>
+                    <p style="margin-top: 20px; color: #ddd;">Memberikan layanan home care profesional dengan penuh kasih dan kompetensi.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Layanan</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Konsultasi Kesehatan</a></li>
+                        <li><a href="#">Layanan Infus</a></li>
+                        <li><a href="#">Pemasangan Alat</a></li>
+                        <li><a href="#">Perawatan Luka</a></li>
+                        <li><a href="#">Perawatan Lansia</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Tautan Cepat</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Beranda</a></li>
+                        <li><a href="#about">Tentang Kami</a></li>
+                        <li><a href="#services">Layanan</a></li>
+                        <li><a href="#contact">Kontak</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Kontak</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Kab. Tangerang, Kec. Sepatan</li>
+                        <li><i class="fas fa-phone-alt"></i> 0857-9256-9539</li>
+                        <li><i class="fas fa-envelope"></i> yullierachma@gmail.com</li>
+                        <li><i class="fas fa-clock"></i> Buka 24/7</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2023 Nova Care Tangerang. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Switcher
+        const themeToggle = document.getElementById('themeToggle');
+        const themeDropdown = document.getElementById('themeDropdown');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const html = document.documentElement;
+        let currentTheme = localStorage.getItem('theme') || 'system';
+
+        // Set initial theme
+        setTheme(currentTheme);
+
+        // Toggle dropdown visibility
+        themeToggle.addEventListener('click', () => {
+            themeDropdown.classList.toggle('active');
+        });
+
+        // Handle theme selection
+        themeOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentTheme = option.getAttribute('data-theme');
+                setTheme(currentTheme);
+                localStorage.setItem('theme', currentTheme);
+                themeDropdown.classList.remove('active');
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
+                themeDropdown.classList.remove('active');
+            }
+        });
+
+        function setTheme(theme) {
+            if (theme === 'system') {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+            } else {
+                html.setAttribute('data-theme', theme);
+            }
+        }
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (currentTheme === 'system') {
+                setTheme('system');
+            }
+        });
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            const toggle = document.querySelector('.navbar-toggle');
+            menu.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const menu = document.getElementById('menu');
+                    if (menu.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                }
+            });
+        });
+
+        // Highlight active nav link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.navbar-menu a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
 </html>
